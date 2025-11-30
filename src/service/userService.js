@@ -21,4 +21,18 @@ const getUsers = async () => {
   return res.data;
 };
 
-export { index, getUsers };
+const getTags = async () => {
+  const res = await api.get(`/api/tags/`);
+  return res.data;
+};
+
+const updateProfile = async (data, isFormData = false) => {
+  const config = isFormData
+    ? { headers: { "Content-Type": "multipart/form-data" } }
+    : {};
+
+  const res = await api.put("/accounts/profile/", data, config);
+  return res.data;
+};
+
+export { index, getUsers, getTags, updateProfile };

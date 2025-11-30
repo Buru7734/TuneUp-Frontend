@@ -5,6 +5,7 @@ import SignInForm from "./components/SignIn/SignIn";
 import SignUpForm from "./components/SignUpForm/SignUpForm";
 import Landing from "./components/Landing/Landing";
 import Dashboard from "./components/Dashboard/Dashboard";
+import CompleteProfile from "./components/Profile/ProfileComplete";
 
 import { UserContext } from "./context/userContext";
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/" element={user ? <Dashboard /> : <Landing />} />
         <Route path="/sign-up" element={<SignUpForm />} />
         <Route path="/sign-in" element={<SignInForm />} />
+        <Route path="/complete-profile" element={<CompleteProfile />} />
       </Routes>
     </>
   );
