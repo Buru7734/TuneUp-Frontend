@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 import { signIn } from "../../service/authService";
 
@@ -24,6 +24,15 @@ const SignInForm = () => {
     try {
       const signedInUser = await signIn(formData);
       setUser(signedInUser);
+      console.log("This is the user", signedInUser);
+      const token = localStorage.getItem("token");
+      console.log("local token:", token);
+      try {
+        if (token)
+          console.log("decoded token:", JSON.parse(atob(token.split(".")[1])));
+      } catch (err) {
+        console.error("Failed to decode token:", err);
+      }
       navigate("/");
     } catch (err) {
       setMessage(err.message);
@@ -59,8 +68,10 @@ const SignInForm = () => {
           />
         </div>
         <div>
-          <button>Sign In</button>
-          <button onClick={() => navigate("/")}>Cancel</button>
+          <button type="submit">Sign In</button>
+          <button type="button" onClick={() => navigate("/")}>
+            Cancel
+          </button>
         </div>
       </form>
     </main>

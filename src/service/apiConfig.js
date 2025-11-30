@@ -14,6 +14,10 @@ const api = axios.create({
 api.interceptors.request.use(
   async function (config) {
     const token = await getToken();
+
+    config.headers["Content-Type"] = "application/json";
+    config.headers["Accept"] = "application/json";
+
     if (token) {
       config.headers["Authorization"] = token;
     }

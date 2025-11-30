@@ -1,14 +1,16 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 import { UserContext } from "../../context/userContext";
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
-    localStorage.remove.Item("token");
+    localStorage.removeItem("token");
     setUser(null);
+    navigate("/sign-in");
   };
 
   return (
@@ -29,6 +31,11 @@ const NavBar = () => {
         <ul>
           <li>
             <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/" onClick={handleSignOut}>
+              Sign Out
+            </Link>
           </li>
           <li>
             <Link to="/sign-in">Sign In</Link>

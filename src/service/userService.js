@@ -4,7 +4,7 @@ const API = import.meta.env.VITE_API_URL;
 
 const index = async () => {
   try {
-    const { data } = await api.get("accounts//users");
+    const { data } = await api.get("accounts/users");
 
     if (data.err) {
       throw new Error(data.err);
