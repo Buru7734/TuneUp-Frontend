@@ -1,32 +1,33 @@
 import api from "./apiConfig";
 
-const API = import.meta.env.VITE_API_URL;
+// Removed unused "API" variable
 
-const index = async () => {
-  try {
-    const { data } = await api.get("accounts/users");
-
-    if (data.err) {
-      throw new Error(data.err);
-    }
-    return data;
-  } catch (err) {
-    console.log(err);
-    throw new Error(err);
-  }
-};
-
-const getUsers = async () => {
-  const res = await api.get(`/accounts/users/`);
+// Get all users
+export const getUsers = async () => {
+  const res = await api.get("/accounts/users/");
   return res.data;
 };
 
-const getTags = async () => {
-  const res = await api.get(`/api/tags/`);
+// Get logged-in user's profile
+export const getProfile = async () => {
+  const res = await api.get("/accounts/profile/");
   return res.data;
 };
 
-const updateProfile = async (data, isFormData = false) => {
+// Get a public profile by ID
+export const getUserById = async (userId) => {
+  const res = await api.get(`/accounts/users/${userId}/`);
+  return res.data;
+};
+
+// Search users
+export const searchUsers = async (query) => {
+  const res = await api.get(`/accounts/users/?search=${query}`);
+  return res.data;
+};
+
+// Update user profile
+export const updateProfile = async (data, isFormData = false) => {
   const config = isFormData
     ? { headers: { "Content-Type": "multipart/form-data" } }
     : {};
@@ -34,5 +35,3 @@ const updateProfile = async (data, isFormData = false) => {
   const res = await api.put("/accounts/profile/", data, config);
   return res.data;
 };
-
-export { index, getUsers, getTags, updateProfile };

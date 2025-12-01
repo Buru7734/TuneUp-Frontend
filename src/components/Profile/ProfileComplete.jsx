@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { updateProfile, getTags } from "../../service/userService";
+import { updateProfile } from "../../service/userService";
+import { getTags } from "../../service/tagsServices";
 
 export default function CompleteProfile() {
   const { user, setUser } = useContext(UserContext);
