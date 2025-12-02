@@ -28,10 +28,18 @@ export const searchUsers = async (query) => {
 
 // Update user profile
 export const updateProfile = async (data, isFormData = false) => {
-  const config = isFormData
-    ? { headers: { "Content-Type": "multipart/form-data" } }
-    : {};
+  const token = localStorage.getItem("token");
 
-  const res = await api.put("/accounts/profile/", data, config);
+  const config = {
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+      ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    },
+  };
+
+  // IMPORTANT: do NOT manually set multipart headers
+  // axios will do it automatically when formData is passed
+
+  const res = await api.patch("/accounts/profile/", data, config);
   return res.data;
 };

@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const fetchedUsers = await userService.index();
+        const fetchedUsers = await userService.getUsers();
         setUsers(fetchedUsers);
       } catch (err) {
         console.log(err);

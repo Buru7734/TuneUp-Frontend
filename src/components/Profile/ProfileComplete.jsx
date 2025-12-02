@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { updateProfile } from "../../service/userService";
 import { getTags } from "../../service/tagsServices";
-
+import AddTagForm from "../AddTagForm/AddTagForm";
 export default function CompleteProfile() {
   const { user, setUser } = useContext(UserContext);
 
@@ -20,6 +20,15 @@ export default function CompleteProfile() {
     skills: [],
     profile_image: null,
   });
+
+  const refreshTags = async () => {
+    try {
+      const updatedTags = await getTags();
+      setTags(updatedTags);
+    } catch (err) {
+      console.error("Error refreshing tags:", err);
+    }
+  };
 
   // Load user + tags
   useEffect(() => {
@@ -80,6 +89,11 @@ export default function CompleteProfile() {
     for (const key in form) {
       if (key === "skills") {
         form.skills.forEach((skillId) => formData.append("skills", skillId));
+      } else if (key === "profile_image") {
+        if (form.profile_image instanceof File) {
+          formData.append("profile_image", form.profile_image);
+        }
+        // ❌ do NOT append if null
       } else {
         formData.append(key, form[key]);
       }
@@ -168,6 +182,8 @@ export default function CompleteProfile() {
               </option>
             ))}
           </select>
+          {/* Add new tag form */}
+          <AddTagForm onTagCreated={refreshTags} />
 
           {/* Social Links */}
           <label style={styles.label}>Instagram</label>
